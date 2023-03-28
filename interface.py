@@ -44,7 +44,8 @@ if uploaded_file:
     except ValueError:
         st.error('Your file does not contain survey & choices sheet. Make sure to include the sheets under these names. If you do not use choices, add an empty sheet')
 
-if uploaded_file and label_field:
+try:
+    if uploaded_file and label_field:
     # Loop through the DataFrame and create the output string
         # Handling all variables except select_multiple
         varnames = "/// Variables labels: \n\n"
@@ -140,6 +141,9 @@ if uploaded_file and label_field:
                 header = '//////// Cleaning Code for ' + filename + '\n\n'
                 outputcode = header + varnames + s_o_line + s_m_line
                 st.code(outputcode, language='html')
+except NameError:
+    pass
+
 with st.sidebar:
     st.title('Need more specialised help?')
     st.sidebar.write("")
