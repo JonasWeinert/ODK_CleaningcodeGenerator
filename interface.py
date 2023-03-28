@@ -1,30 +1,26 @@
+# Initialise project
 import streamlit as st
 import pandas as pd
 import numpy as np
 
+# Start Front End interface
 st.set_page_config(page_title='ODKCleaner', page_icon="🧡")
 
-
+# Import Styles
 def load_css(file_name):
     with open(file_name) as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
-
 load_css('style.css')
 
+# Set Front End appearance
+st.title('ODK -> STATA') # Title
+st.markdown('This website produces STATA cleaning code for your ODK generated dataset. Just upload your XLSForm below to get started. You can find the XLSForm of your questionnaire in your dashboard on Kobo/ODK Cloud/ SurveyCTO. Click [here](https://xlsform.org/en/) for more information.') # First paragraph
+st.subheader('Upload your XLSForm') # Upload prompt
+uploaded_file = st.file_uploader('Choose your XLSXFile', type='xlsx') # Save file to memory for duration of session
 
-st.title('ODK -> STATA')
-st.markdown('This website produces STATA cleaning code for your ODK generated dataset. Just upload your XLSForm below to get started. You can find the XLSForm of your questionnaire in your dashboard on Kobo/ODK Cloud/ SurveyCTO. Click [here](https://xlsform.org/en/) for more information.')
-st.subheader('Upload your XLSForm')
-
-code = '''foreach v in varlist{
-    testststs   
-    }'''
-
-uploaded_file = st.file_uploader('Choose your XLSXFile', type='xlsx')
-
- 
+# Import Survey and Choices sheets into dataframes 
 if uploaded_file:
-        filename = uploaded_file.name
+        filename = uploaded_file.name # store filename
         st.markdown('---')
     # Preparing dataframes 
         # Read excel sheets into data frames
@@ -32,14 +28,17 @@ if uploaded_file:
         dfsurvey = pd.read_excel(uploaded_file, 'survey', engine = 'openpyxl')
         # split type into two columns to get list_name
         dfsurvey[['type', 'list_name']] = dfsurvey['type'].str.split(' ', expand=True)
+    # Prepare label/language selection field by identifying different labels
         # Find columns containing the string 'label'
         var_label_columns = [col for col in dfsurvey.columns if 'label' in col]
         var_label_columns.insert(0, 'Select a column')
-        # Let user choose language
+    # Let user choose language
         st.subheader('Setup')
         label_field = st.selectbox('Which set of questionnaire labels do you want to use as your variable labels:', var_label_columns)
-        st.markdown('Your questionnaire uses *select_multiple* fields. Please make sure to choose the "seperate select_multiple" option in ODK/Kobo/SurveyCTO/... when downloading your data. ')
-        s_m_splitter = st.text_input("Please type the seperator symbol that you used below (leave blank for no symbol):")
+    # Select_multiple seperator
+        if 'select_multiple' in dfsurvey['type'].values: # Check if select_multiple fields are in survey
+            st.markdown('Your questionnaire uses *select_multiple* fields. Please make sure to choose the "seperate select_multiple" option in ODK/Kobo/SurveyCTO/... when downloading your data. ')
+            s_m_splitter = st.text_input("Please type the seperator symbol that you used below (leave blank for no symbol):")
 
 if uploaded_file and label_field:
     # Loop through the DataFrame and create the output string
