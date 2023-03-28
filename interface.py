@@ -18,7 +18,7 @@ st.markdown('This website produces STATA cleaning code for your ODK generated da
 st.subheader('Upload your XLSForm') # Upload prompt
 uploaded_file = st.file_uploader('Choose your XLSXFile', type='xlsx') # Save file to memory for duration of session
 
-# Import Survey and Choices sheets into dataframes 
+# Import Survey and Choices sheets into dataframes & ask user relevant field information
 if uploaded_file:
     try:
         filename = uploaded_file.name # store filename
@@ -40,20 +40,20 @@ if uploaded_file:
         if 'select_multiple' in dfsurvey['type'].values: # Check if select_multiple fields are in survey
             st.markdown('Your questionnaire uses *select_multiple* fields. Please make sure to choose the "seperate select_multiple" option in ODK/Kobo/SurveyCTO/... when downloading your data. ')
             s_m_splitter = st.text_input("Please type the seperator symbol that you used below (leave blank for no symbol):")
-
     except ValueError:
         st.error('Your file does not contain survey & choices sheet. Make sure to include the sheets under these names. If you do not use choices, add an empty sheet')
 
+# Generating cleaning lines
 try:
     if uploaded_file and label_field:
     # Loop through the DataFrame and create the output string
         # Handling all variables except select_multiple
         varnames = "/// Variables labels: \n\n"
-        line_reg = ""
-        line_note = ""
-        line_calc = ""
-        line_range = ""
-        varnames_finished = False
+        line_reg = "" # regular variables
+        line_note = "" # notes
+        line_calc = "" # calc fields
+        line_range = "" # range fields
+        varnames_finished = False # indicating completion of this step
         ## Variable names
         try:
             for index, row in dfsurvey.iterrows():
@@ -73,74 +73,74 @@ try:
                 varnames_finished = True
         except KeyError:
             pass
+        
+    ## Value labels for select_one
+    s_o_labelling_finished = False
+    try:
+        s_o_line = "/// Value labels for dummy variables: \n\n"
+        # Iterate through survez sheet
+        for index, survey_row in dfsurvey.iterrows():
+            if survey_row["type"] == "select_one":
+                mpstr = survey_row["list_name"]
+                quest = survey_row[label_field]
+                name = survey_row["name"]
+                x = 1
+                s_o_line += f'capture label define {name} '
+                for index, choices_row in dfchoices.iterrows():
+                    if choices_row["list_name"] == mpstr:
+                        answ = choices_row[label_field]
+                        num = choices_row["name"]
+                        s_o_line += f'{num} "{answ}" '
+                        x += 1
+                s_o_line += f', replace\n'
+                s_o_line += f'capture label val {name} {name}\n\n'
+        else:
+            s_o_labelling_finished = True
 
-        ## Value labels for select_one
-        s_o_labelling_finished = False
-        try:
-            s_o_line = "/// Value labels for dummy variables: \n\n"
-            # Iterate through survez sheet
-            for index, survey_row in dfsurvey.iterrows():
-                if survey_row["type"] == "select_one":
-                    mpstr = survey_row["list_name"]
-                    quest = survey_row[label_field]
-                    name = survey_row["name"]
-                    x = 1
-                    s_o_line += f'capture label define {name} '
-                    for index, choices_row in dfchoices.iterrows():
-                        if choices_row["list_name"] == mpstr:
-                            answ = choices_row[label_field]
-                            num = choices_row["name"]
-                            s_o_line += f'{num} "{answ}" '
-                            x += 1
-                    s_o_line += f', replace\n'
-                    s_o_line += f'capture label val {name} {name}\n\n'
-            else:
-                s_o_labelling_finished = True
-
-        except KeyError:
-            pass
-
-
-        ## Split select multiple
+    except KeyError:
+        pass
 
 
-        # select_multiple variables: varnames + labels
-        s_m_labelling_finished = False
-        try:
-            s_m_line = "\n /// Select_Multiple Questions: \n\n"
-            # Iterate through survez sheet
-            for index, survey_row in dfsurvey.iterrows():
-                if survey_row["type"] == "select_multiple":
-                    mpstr = survey_row["list_name"]
-                    quest = survey_row[label_field]
-                    name = survey_row["name"]
-                    x = 1
-                
-                    for index, choices_row in dfchoices.iterrows():
-                        if choices_row["list_name"] == mpstr:
-                            answ = choices_row[label_field]
-                            num = choices_row["name"]
-                            s_m_line += f'capture label variable {name}{s_m_splitter}{num} "{num}_{answ}:{quest}"\n'
-                            s_m_line += f'capture label define {name}{s_m_splitter}{num} 0 "No" 1 "Yes", replace\n'
-                            s_m_line += f'capture label val {name}{s_m_splitter}{num} {name}{num}\n\n'
-                            x += 1
-            else:
-                s_m_labelling_finished = True
-
-        except KeyError:
-            pass
- 
+    ## Split select multiple
 
 
+    # select_multiple variables: varnames + labels
+    s_m_labelling_finished = False
+    try:
+        s_m_line = "\n /// Select_Multiple Questions: \n\n"
+        # Iterate through survez sheet
+        for index, survey_row in dfsurvey.iterrows():
+            if survey_row["type"] == "select_multiple":
+                mpstr = survey_row["list_name"]
+                quest = survey_row[label_field]
+                name = survey_row["name"]
+                x = 1
+            
+                for index, choices_row in dfchoices.iterrows():
+                    if choices_row["list_name"] == mpstr:
+                        answ = choices_row[label_field]
+                        num = choices_row["name"]
+                        s_m_line += f'capture label variable {name}{s_m_splitter}{num} "{num}_{answ}:{quest}"\n'
+                        s_m_line += f'capture label define {name}{s_m_splitter}{num} 0 "No" 1 "Yes", replace\n'
+                        s_m_line += f'capture label val {name}{s_m_splitter}{num} {name}{num}\n\n'
+                        x += 1
+        else:
+            s_m_labelling_finished = True
 
-    # Print code
-        if varnames_finished and s_o_labelling_finished and s_m_labelling_finished:
-                st.markdown('---')
-                st.subheader('Your Stata Cleaning Code')
-                st.markdown('This WebApp was developed with love and coffe. If you like the result, please consider [buying me a coffe](#).')
-                header = '//////// Cleaning Code for ' + filename + '\n\n'
-                outputcode = header + varnames + s_o_line + s_m_line
-                st.code(outputcode, language='html')
+    except KeyError:
+        pass
+
+
+
+
+# Print code
+    if varnames_finished and s_o_labelling_finished and s_m_labelling_finished:
+            st.markdown('---')
+            st.subheader('Your Stata Cleaning Code')
+            st.markdown('This WebApp was developed with love and coffe. If you like the result, please consider [buying me a coffe](#).')
+            header = '//////// Cleaning Code for ' + filename + '\n\n'
+            outputcode = header + varnames + s_o_line + s_m_line
+            st.code(outputcode, language='html')
 except NameError:
     pass
 
