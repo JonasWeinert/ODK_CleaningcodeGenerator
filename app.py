@@ -1,14 +1,18 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import json
-import time
-import requests
-from streamlit_lottie import st_lottie
-from streamlit_lottie import st_lottie_spinner
-
+import openpyxl as ox
 
 st.set_page_config(page_title='ODKCleaner')
+
+
+def load_css(file_name):
+    with open(file_name) as f:
+        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+
+load_css('style.css')
+
+
 st.title('ODK -> Stata')
 st.markdown('This website produces STATA cleaning code for your ODK generated dataset. Just upload your XLSForm below to get started. You can find the XLSForm of your questionnaire in your dashnoard on Kobo/ODK Cloud/ SurveyCTO. Click here for more information.')
 st.subheader('Upload your XLSForm')
@@ -41,7 +45,7 @@ if uploaded_file:
 if uploaded_file and label_field:
     # Loop through the DataFrame and create the output string
         # Handling all variables except select_multiple
-        varnames = ""
+        varnames = "/// Variables labels: \n\n"
         line_reg = ""
         line_note = ""
         line_calc = ""
@@ -70,7 +74,7 @@ if uploaded_file and label_field:
         ## Value labels for select_one
         s_o_labelling_finished = False
         try:
-            s_o_line = ""
+            s_o_line = "/// Value labels for dummy variables: \n\n"
             # Iterate through survez sheet
             for index, survey_row in dfsurvey.iterrows():
                 if survey_row["type"] == "select_one":
@@ -100,7 +104,7 @@ if uploaded_file and label_field:
         # select_multiple variables: varnames + labels
         s_m_labelling_finished = False
         try:
-            s_m_line = ""
+            s_m_line = "\n /// Select_Multiple Questions: \n\n"
             # Iterate through survez sheet
             for index, survey_row in dfsurvey.iterrows():
                 if survey_row["type"] == "select_multiple":
@@ -131,8 +135,8 @@ if uploaded_file and label_field:
                 st.markdown('---')
                 st.subheader('Your Stata Cleaning Code')
                 st.markdown('This WebApp was developed with love and coffe. If you like the result, please consider buying me a coffe here')
-                header = '**************** Cleaning Code' + filename + '\n\n'
-                outputcode = header + varnames + '\n ******************** Value Labels \n\n' + s_o_line + '\n ******************** Value Labels \n\n'+ s_m_line
+                header = '//////// Cleaning Code' + filename + '\n\n'
+                outputcode = header + varnames + s_o_line + s_m_line
                 st.code(outputcode, language='html')
 with st.sidebar:
     st.title('Need more specialised help?')
@@ -151,6 +155,16 @@ with st.sidebar:
     st.markdown('#### Repository:')
     st.markdown('- [Contribute on GitHub](https://github.com/JonasWeinert/ODK_CleaningcodeGenerator/)')
     st.markdown('---')
-    st.header('Check out my other ODK tools')
-    st.markdown('##### Reach out ')
+    st.header('Was this helpful to you? ')
+    st.markdown('- [Buy me a coffee](#)')
     st.markdown('---')
+
+    
+hide_st_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_st_style, unsafe_allow_html=True)
