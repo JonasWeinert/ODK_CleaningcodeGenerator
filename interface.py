@@ -13,7 +13,7 @@ load_css('style.css')
 
 
 st.title('ODK -> STATA')
-st.markdown('This website produces STATA cleaning code for your ODK generated dataset. Just upload your XLSForm below to get started. You can find the XLSForm of your questionnaire in your dashboard on Kobo/ODK Cloud/ SurveyCTO. Click here for more information.')
+st.markdown('This website produces STATA cleaning code for your ODK generated dataset. Just upload your XLSForm below to get started. You can find the XLSForm of your questionnaire in your dashboard on Kobo/ODK Cloud/ SurveyCTO. Click [here](https://xlsform.org/en/) for more information.')
 st.subheader('Upload your XLSForm')
 
 code = '''foreach v in varlist{
@@ -133,7 +133,7 @@ if uploaded_file and label_field:
         if varnames_finished and s_o_labelling_finished and s_m_labelling_finished:
                 st.markdown('---')
                 st.subheader('Your Stata Cleaning Code')
-                st.markdown('This WebApp was developed with love and coffe. If you like the result, please consider buying me a coffe [here](#)')
+                st.markdown('This WebApp was developed with love and coffe. If you like the result, please consider [buying me a coffe](#).')
                 header = '//////// Cleaning Code for ' + filename + '\n\n'
                 outputcode = header + varnames + s_o_line + s_m_line
                 st.code(outputcode, language='html')
