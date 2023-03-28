@@ -20,6 +20,7 @@ uploaded_file = st.file_uploader('Choose your XLSXFile', type='xlsx') # Save fil
 
 # Import Survey and Choices sheets into dataframes 
 if uploaded_file:
+    try:
         filename = uploaded_file.name # store filename
         st.markdown('---')
     # Preparing dataframes 
@@ -39,6 +40,9 @@ if uploaded_file:
         if 'select_multiple' in dfsurvey['type'].values: # Check if select_multiple fields are in survey
             st.markdown('Your questionnaire uses *select_multiple* fields. Please make sure to choose the "seperate select_multiple" option in ODK/Kobo/SurveyCTO/... when downloading your data. ')
             s_m_splitter = st.text_input("Please type the seperator symbol that you used below (leave blank for no symbol):")
+
+    except ValueError:
+        st.error('Your file does not contain survey & choices sheet. Make sure to include the sheets under these names. If you do not use choices, add an empty sheet')
 
 if uploaded_file and label_field:
     # Loop through the DataFrame and create the output string
