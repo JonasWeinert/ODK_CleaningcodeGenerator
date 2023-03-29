@@ -70,8 +70,21 @@ if uploaded_file:
         label_field = st.selectbox('Which set of questionnaire labels do you want to use as your variable labels:', var_label_columns)
     # Select_multiple seperator
         if 'select_multiple' in dfsurvey['type'].values: # Check if select_multiple fields are in survey
-            st.markdown('Your questionnaire uses *select_multiple* fields. Please make sure to choose the "seperate select_multiple" option in ODK/Kobo/SurveyCTO/... when downloading your data. ')
-            s_m_splitter = st.text_input("Please type the seperator symbol that you used below (leave blank for no symbol):")
+            st.markdown('Your questionnaire uses *select_multiple* fields. Please indicate if you want to produce code that splits these into a set of binary variables, or if you already selected the "seperate select_multiple" option in ODK/Kobo/SurveyCTO/... when downloading your data.')
+            col1, col2 = st.columns(2)
+            with col1:
+                s_m_handle = st.radio(
+                    "How do you want to handle these questions:",
+                    key="visibility",
+                    options=["They are already split. Just label them for me", "Split and label them for me"],
+                )
+            with col2:
+                if s_m_handle == "They are already split. Just label them for me":
+                    s_m_splitter = st.text_input("Please type the seperator symbol that you used below. This is the symbol that is put between the question name and the respective answer option in your dummies' names. Leave blank for no symbol:")
+
+                if s_m_handle == "Split and label them for me":
+                    s_m_splitter = st.text_input("Please type the seperator symbol that you would like to use below. This is the symbol that is put between the question name and the respective answer option in your dummies' names. Leave blank for no symbol:")
+
     except ValueError:
         st.error('Your file does not contain survey & choices sheet. Make sure to include the sheets under these names. If you do not use choices, add an empty sheet')
 # Generating cleaning lines
