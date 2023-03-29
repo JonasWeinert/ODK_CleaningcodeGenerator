@@ -67,11 +67,12 @@ if uploaded_file:
         var_label_columns.insert(0, 'Select a column')
     # Let user choose language
         st.subheader('Setup')
-        st.markdown('### Label language')
+        st.markdown('#### Label language')
         label_field = st.selectbox('Which set of questionnaire labels do you want to use as your variable labels:', var_label_columns)
     # Select_multiple seperator
         if 'select_multiple' in dfsurvey['type'].values: # Check if select_multiple fields are in survey
-            st.markdown('### Handling *select_multiple* fileds')
+            st.markdown(' ')
+            st.markdown('#### Handling *select_multiple* fileds')
             st.markdown('Your questionnaire uses *select_multiple* fields. Please indicate if you want to produce code that splits these into a set of binary variables, or if you already selected the "seperate select_multiple" option in ODK/Kobo/SurveyCTO/... when downloading your data.')
             col1, col2 = st.columns(2)
             with col1:
