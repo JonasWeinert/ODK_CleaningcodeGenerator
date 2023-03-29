@@ -71,6 +71,11 @@ if uploaded_file:
         label_field = st.selectbox('Which set of questionnaire labels do you want to use as your variable labels:', var_label_columns)
     # Select_multiple seperator
         if 'select_multiple' in dfsurvey['type'].values: # Check if select_multiple fields are in survey
+            # Find the first row where the 'type' column is 'select_multiple'
+            first_select_multiple = dfsurvey.loc[df['type'] == 'select_multiple'].iloc[0]
+            # Extract the value of the 'name' column from the first matching row
+            first_sm_name = first_select_multiple['name']
+
             st.markdown(' ')
             st.markdown('#### Handling *select_multiple* fileds')
             st.markdown('Your questionnaire uses *select_multiple* fields. Please indicate if you want to produce code that splits these into a set of binary variables, or if you already selected the "seperate select_multiple" option in ODK/Kobo/SurveyCTO/... when downloading your data.')
@@ -84,8 +89,8 @@ if uploaded_file:
             with col2:
                 if s_m_handle == "They are already split. Just label them for me":
                     s_m_splitter = st.text_input("Please type the seperator symbol that you used below. This is the symbol that is put between the question name and the respective answer option in your dummies' names. Leave blank for no symbol:")
-                    st.markdown('Example:')
-                    st.markdown('`Example:`')
+                    st.markdown('Example dummz names:')
+                    st.markdown('`[first_sm_name]`')
 
                 if s_m_handle == "Split and label them for me":
                     s_m_splitter = st.text_input("Please type the seperator symbol that you would like to use below. This is the symbol that is put between the question name and the respective answer option in your dummies' names. Leave blank for no symbol:")
