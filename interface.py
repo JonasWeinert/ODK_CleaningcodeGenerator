@@ -87,7 +87,7 @@ if uploaded_file:
 
                 if s_m_handle == "Split and label them for me":
                     s_m_splitter = st.text_input("Please type the seperator symbol that you would like to use below. This is the symbol that is put between the question name and the respective answer option in your dummies' names. Leave blank for no symbol:")
-
+            st.markdown('---')
     except ValueError:
         st.error('Your file does not contain survey & choices sheet. Make sure to include the sheets under these names. If you do not use choices, add an empty sheet')
 # Generating cleaning lines
