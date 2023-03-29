@@ -72,7 +72,7 @@ if uploaded_file:
     # Select_multiple seperator
         if 'select_multiple' in dfsurvey['type'].values: # Check if select_multiple fields are in survey
             # Find the first row where the 'type' column is 'select_multiple'
-            first_select_multiple = dfsurvey.loc[df['type'] == 'select_multiple'].iloc[0]
+            first_select_multiple = dfsurvey.loc[dfsurvey['type'] == 'select_multiple'].iloc[0]
             # Extract the value of the 'name' column from the first matching row
             first_sm_name = first_select_multiple['name']
 
