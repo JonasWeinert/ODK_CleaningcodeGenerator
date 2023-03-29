@@ -84,6 +84,8 @@ if uploaded_file:
             with col2:
                 if s_m_handle == "They are already split. Just label them for me":
                     s_m_splitter = st.text_input("Please type the seperator symbol that you used below. This is the symbol that is put between the question name and the respective answer option in your dummies' names. Leave blank for no symbol:")
+                    st.markdown('Example:')
+                    st.markdown('`Example:`')
 
                 if s_m_handle == "Split and label them for me":
                     s_m_splitter = st.text_input("Please type the seperator symbol that you would like to use below. This is the symbol that is put between the question name and the respective answer option in your dummies' names. Leave blank for no symbol:")
