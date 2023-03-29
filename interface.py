@@ -75,6 +75,8 @@ if uploaded_file:
             first_select_multiple = dfsurvey.loc[dfsurvey['type'] == 'select_multiple'].iloc[0]
             # Extract the value of the 'name' column from the first matching row
             first_sm_name = first_select_multiple['name']
+            first_sm_list = first_select_multiple['list_name']
+            first_sm_opt = dfchoices.loc[dfchoices['list_name'] == first_sm_list].iloc[0]
 
             st.markdown(' ')
             st.markdown('#### Handling *select_multiple* fileds')
@@ -89,8 +91,8 @@ if uploaded_file:
             with col2:
                 if s_m_handle == "They are already split. Just label them for me":
                     s_m_splitter = st.text_input("Please type the seperator symbol that you used below. This is the symbol that is put between the question name and the respective answer option in your dummies' names. Leave blank for no symbol:")
-                    st.markdown('Example dummz names:')
-                    st.markdown(`first_sm_name`, unsafe_allow_html =True, )
+                    st.markdown('Example dummy names:')
+                    st.markdown(first_sm_name''first_sm_opt, unsafe_allow_html =True, )
 
                 if s_m_handle == "Split and label them for me":
                     s_m_splitter = st.text_input("Please type the seperator symbol that you would like to use below. This is the symbol that is put between the question name and the respective answer option in your dummies' names. Leave blank for no symbol:")
