@@ -77,6 +77,7 @@ if uploaded_file:
             first_sm_name = first_select_multiple['name']
             first_sm_list = first_select_multiple['list_name']
             first_sm_opt = dfchoices.loc[dfchoices['list_name'] == first_sm_list].iloc[0]
+            first_sm_val = first_sm_opt['name']
 
             st.markdown(' ')
             st.markdown('#### Handling *select_multiple* fileds')
