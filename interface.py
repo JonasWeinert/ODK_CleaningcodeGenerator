@@ -76,6 +76,7 @@ if uploaded_file:
             # Extract the value of the 'name' column from the first matching row
             first_sm_name = first_select_multiple['name']
             first_sm_list = first_select_multiple['list_name']
+
             first_sm_opt = dfchoices.loc[dfchoices['list_name'] == first_sm_list].iloc[0]
             first_sm_val = first_sm_opt['name']
 
@@ -112,7 +113,7 @@ try:
         line_range = "" # range fields
         varnames_finished = False # indicating completion of this step
         ## Variable names
-        try:
+        #try:
             for index, row in dfsurvey.iterrows():
                 if row["type"] not in ["note", "calculate", "begin_group", "end_group" "rank"]:
                     line_reg = f'capture label variable {row["name"]} "{row[label_field]}" \n\n'
@@ -128,13 +129,13 @@ try:
                     varnames += line_note   
             else:
                 varnames_finished = True
-        except KeyError:
+        #except KeyError:
             pass
 
         ## Value labels for select_one
         s_o_labelling_finished = False
         try:
-            s_o_line = "/// Value labels for dummy variables: \n\n"
+            s_o_line = "/// Value labels for single choice variables: \n\n"
             # Iterate through survey sheet
             for index, survey_row in dfsurvey.iterrows():
                 if survey_row["type"] == "select_one":
