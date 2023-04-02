@@ -92,7 +92,7 @@ if uploaded_file:
         st.error('Your file does not contain survey & choices sheet. Make sure to include the sheets under these names. If you do not use choices, add an empty sheet')
 
 # Generating cleaning lines
-try:
+#try:
     if uploaded_file and label_field:
     # Loop through the DataFrame and create the output string
         # Handling all variables except select_multiple
@@ -209,9 +209,8 @@ try:
                 outputcode = header + varnames + s_o_line + s_m_line
                 st.code(outputcode, language='html')
                 st.markdown('This WebApp was developed with love and coffe. If you like the result, please consider [buying me a coffe](#).')
-except NameError:
-    st.error('11')
-
+#except NameError:
+    #pass
 st.markdown('---')
 with st.expander("Privacy and legal note"):
     st.markdown('Functional Cookies: ODK Cleaning Code Generator uses functional cookies to enhance your user experience on our webapp. These cookies are essential for the basic functionality of the webapp, such as remembering your preferences, providing security, and improving site performance. No personal data is collected. Please note that by using this webapp, you agree to this use of functional cookies. You can, however, disable cookies through your browser settings, but this may affect the functionality of the webapp. Legal Note: ODK Cleaning Code Generator is provided "as is" without any representations or warranties, express or implied. ODK Cleaning Code Generator makes no representations or warranties in relation to the information, services, or materials provided on our webapp. ODK Cleaning Code Generator does not accept liability for any inaccuracies, errors, or omissions in the information, services, or materials provided on our webapp. By using this webapp, you acknowledge that the information and services may contain inaccuracies or errors, and ODK Cleaning Code Generator expressly excludes liability for any such inaccuracies or errors to the fullest extent permitted by law. ODK Cleaning Code Generator is not responsible or liable for any outcomes or consequences resulting from the use of the webapp or any of its features. You agree that your use of the webapp is at your sole risk, and you assume full responsibility for any decisions or actions taken based on the information or materials provided. By using ODK Cleaning Code Generator, you agree to indemnify, defend, and hold harmless ODK Cleaning Code Generator and its creator from and against any and all claims, liabilities, damages, losses, or expenses, including reasonable attorneys fees and costs, arising out of or in any way connected with your access to or use of the webapp.')
