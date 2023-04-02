@@ -186,9 +186,8 @@ try:
 except NameError:
     pass
 
-expander = st.expander("See explanation")
-#expander.write(The chart above shows some numbers I picked for you. I rolled actual dice for these, so they are *guaranteed* tobe random.)
-
+with st.expander("See explanation"):
+    st.image("https://static.streamlit.io/examples/dice.jpg")
 
 
 
