@@ -103,25 +103,24 @@ try:
         line_range = "" # range fields
         varnames_finished = False # indicating completion of this step
         ## Variable names
-        try:
-            for index, row in dfsurvey.iterrows():
-                if row["type"] not in ["note", "calculate", "begin_group", "end_group" "range" "begin_repeat" "end_repeat"]:
-                    line_reg = f'capture label variable {row["name"]} "{row[label_field]}" \n\n'
-                    varnames += line_reg
-                if row["type"] in ["calculate"]:
-                    line_calc = f'capture label {row["name"]}  "calculation: {row["calculation"]}"\n\n'
-                    varnames += line_calc   
-                if row["type"] in ["range"]:
-                    line_calc = f'capture label {row["name"]}  "{row[label_field]}" "range: {row["appearance"]}"\n\n'
-                    varnames += line_range   
-                if row["type"] in ["note"]:
-                    line_note = f'capture drop {row["name"]}\n\n'
-                    varnames += line_note   
-            else:
-                varnames_finished = True
-        except KeyError:
-            #pass
-            st.error('11')
+        #try:
+        for index, row in dfsurvey.iterrows():
+            if row["type"] not in ["note", "calculate", "begin_group", "end_group" "range" "begin_repeat" "end_repeat"]:
+                line_reg = f'capture label variable {row["name"]} "{row[label_field]}" \n\n'
+                varnames += line_reg
+            if row["type"] in ["calculate"]:
+                line_calc = f'capture label {row["name"]}  "calculation: {row["calculation"]}"\n\n'
+                varnames += line_calc   
+            if row["type"] in ["range"]:
+                line_calc = f'capture label {row["name"]}  "{row[label_field]}" "range: {row["appearance"]}"\n\n'
+                varnames += line_range   
+            if row["type"] in ["note"]:
+                line_note = f'capture drop {row["name"]}\n\n'
+                varnames += line_note   
+        else:
+            varnames_finished = True
+    #except KeyError:
+        #pass
 
         ## Value labels for select_one
         s_o_labelling_finished = False
