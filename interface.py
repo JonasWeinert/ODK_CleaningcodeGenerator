@@ -105,7 +105,7 @@ try:
         ## Variable names
         try:
             for index, row in dfsurvey.iterrows():
-                if row["type"] not in ["note", "calculate", "begin_group", "end_group" "rank"]:
+                if row["type"] not in ["note", "calculate", "begin_group", "end_group" "range" "begin_repeat" "end_repeat"]:
                     line_reg = f'capture label variable {row["name"]} "{row[label_field]}" \n\n'
                     varnames += line_reg
                 if row["type"] in ["calculate"]:
@@ -203,7 +203,8 @@ try:
         if varnames_finished and s_o_labelling_finished and s_m_labelling_finished:
                 st.markdown('---')
                 st.subheader('Your Stata Cleaning Code')
-                st.info("Looks cool [link](https://share.streamlit.io/mesmith027/streamlit_webapps/main/MC_pi/streamlit_app.py)")
+                if 'select_multiple' in dfsurvey['type'].values: # Check if select_multiple fields are in survey
+                    st.info("Looks like you are using repeats in your queistionnaire. Merge them easily with this [dataset merger](#).")
                 st.markdown('This WebApp was developed with love and coffe. If you like the result, please consider [buying me a coffe](#).')
                 header = '//////// Cleaning Code for ' + filename + '\n\n'
                 outputcode = header + varnames + s_o_line + s_m_line
