@@ -174,14 +174,7 @@ try:
                 s_m_labelling_finished = True
         except KeyError:
             pass
-
-expander = st.expander("See explanation")
-expander.write(\"\"\"
-    The chart above shows some numbers I picked for you.
-    I rolled actual dice for these, so they're *guaranteed* to
-    be random.
-\"\"\")
-
+ 
     # Print code
         if varnames_finished and s_o_labelling_finished and s_m_labelling_finished:
                 st.markdown('---')
@@ -192,6 +185,10 @@ expander.write(\"\"\"
                 st.code(outputcode, language='html')
 except NameError:
     pass
+
+expander = st.expander("See explanation")
+expander.write(The chart above shows some numbers I picked for you. I rolled actual dice for these, so they are *guaranteed* tobe random.)
+
 
 
 
