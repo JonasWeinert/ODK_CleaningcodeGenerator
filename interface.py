@@ -175,6 +175,13 @@ try:
         except KeyError:
             pass
 
+with st.expander("See explanation"):
+    st.write(\"\"\"
+        The chart above shows some numbers I picked for you.
+        I rolled actual dice for these, so they're *guaranteed* to
+        be random.
+    \"\"\")
+
     # Print code
         if varnames_finished and s_o_labelling_finished and s_m_labelling_finished:
                 st.markdown('---')
