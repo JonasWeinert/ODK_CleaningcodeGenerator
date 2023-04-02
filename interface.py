@@ -49,6 +49,7 @@ with st.sidebar:
 if uploaded_file: 
     try:
         filename = uploaded_file.name # store filename
+        s_m_handle = "" # initialise select_multiple handling variable
         st.markdown('---')
     # Preparing dataframes 
         # Read excel sheets into data frames
