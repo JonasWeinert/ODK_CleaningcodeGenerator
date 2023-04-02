@@ -205,10 +205,11 @@ try:
                 st.subheader('Your Stata Cleaning Code')
                 if 'select_multiple' in dfsurvey['type'].values: # Check if select_multiple fields are in survey
                     st.info("Looks like you are using repeats in your queistionnaire. Merge them easily with this [dataset merger](#).")
-                st.markdown('This WebApp was developed with love and coffe. If you like the result, please consider [buying me a coffe](#).')
                 header = '//////// Cleaning Code for ' + filename + '\n\n'
                 outputcode = header + varnames + s_o_line + s_m_line
                 st.code(outputcode, language='html')
+                st.markdown('This WebApp was developed with love and coffe. If you like the result, please consider [buying me a coffe](#).')
+
 except NameError:
     pass
 st.markdown('---')
