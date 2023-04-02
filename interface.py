@@ -201,7 +201,7 @@ if uploaded_file:
                 pass
 
     # Print code
-        if varnames_finished and s_o_labelling_finished and s_m_labelling_finished:
+        if varnames_finished != False and s_o_labelling_finished != False and s_m_labelling_finished != False:
                 st.markdown('---')
                 st.subheader('Your Stata Cleaning Code')
                 if 'select_multiple' in dfsurvey['type'].values: # Check if select_multiple fields are in survey
