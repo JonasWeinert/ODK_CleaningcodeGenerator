@@ -209,7 +209,6 @@ try:
                 outputcode = header + varnames + s_o_line + s_m_line
                 st.code(outputcode, language='html')
                 st.markdown('This WebApp was developed with love and coffe. If you like the result, please consider [buying me a coffe](#).')
-
 except NameError:
     pass
 st.markdown('---')
