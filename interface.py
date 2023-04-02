@@ -187,7 +187,7 @@ except NameError:
     pass
 
 expander = st.expander("See explanation")
-expander.write(The chart above shows some numbers I picked for you. I rolled actual dice for these, so they are *guaranteed* tobe random.)
+#expander.write(The chart above shows some numbers I picked for you. I rolled actual dice for these, so they are *guaranteed* tobe random.)
 
 
 
