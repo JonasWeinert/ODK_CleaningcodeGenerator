@@ -203,6 +203,7 @@ try:
         if varnames_finished and s_o_labelling_finished and s_m_labelling_finished:
                 st.markdown('---')
                 st.subheader('Your Stata Cleaning Code')
+                st.info("Looks cool")
                 st.markdown('This WebApp was developed with love and coffe. If you like the result, please consider [buying me a coffe](#).')
                 header = '//////// Cleaning Code for ' + filename + '\n\n'
                 outputcode = header + varnames + s_o_line + s_m_line
