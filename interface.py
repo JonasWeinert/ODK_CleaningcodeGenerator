@@ -37,12 +37,7 @@ with st.sidebar:
     st.markdown('[Email](emailto:jnas.weinert@gmail.com)')
     st.markdown('---')
     st.header('This project')
-    st.markdown('#### Planned features:')
-    st.markdown('- Reformatting date and time variables from strings')
-    st.markdown('- Optionally split *select_multiple* fields in Stata instead of at export')
-    st.markdown('- Create cleaning code for R')
     st.markdown('- [Request a feature](https://github.com/JonasWeinert/ODK_CleaningcodeGenerator/issues=)')
-    st.markdown('#### Repository:')
     st.markdown('- [Contribute on GitHub](https://github.com/JonasWeinert/ODK_CleaningcodeGenerator/)')
     st.markdown('---')
     st.header('Was this helpful to you? ')
@@ -168,6 +163,7 @@ try:
                             if choices_row["list_name"] == mpstr:
                                 answ = choices_row[label_field]
                                 num = choices_row["name"]
+
                                 s_m_line += f'capture label variable {name}{s_m_splitter}{num} "{num}_{answ}:{quest}"\n'
                                 s_m_line += f'capture label define {name}{s_m_splitter}{num} 0 "No" 1 "Yes", replace\n'
                                 s_m_line += f'capture label val {name}{s_m_splitter}{num} {name}{num}\n\n'
