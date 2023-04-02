@@ -156,7 +156,7 @@ if uploaded_file:
                 # Iterate through survez sheet
                 for index, survey_row in dfsurvey.iterrows():
                     if survey_row["type"] == "select_multiple":
-                        mpstr = survey_row["list_name"]
+                        mpstr = survey_row["list_name"] 
                         quest = survey_row[label_field]
                         name = survey_row["name"]
                         x = 1
