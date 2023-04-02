@@ -49,7 +49,7 @@ with st.sidebar:
 if uploaded_file: 
     try:
         filename = uploaded_file.name # store filename
-        s_m_handle = "" # initialise select_multiple handling variable
+        s_m_handle = "They are already split. Just label them for me." # initialise select_multiple handling variable
         st.markdown('---')
     # Preparing dataframes 
         # Read excel sheets into data frames
@@ -201,7 +201,7 @@ if uploaded_file:
                 pass
 
     # Print code
-        if varnames_finished and s_o_labelling_finished: # and s_m_labelling_finished:
+        if varnames_finished and s_o_labelling_finished and s_m_labelling_finished:
                 st.markdown('---')
                 st.subheader('Your Stata Cleaning Code')
                 if 'select_multiple' in dfsurvey['type'].values: # Check if select_multiple fields are in survey
