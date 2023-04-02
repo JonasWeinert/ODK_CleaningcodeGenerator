@@ -75,27 +75,21 @@ if uploaded_file:
             first_select_multiple = dfsurvey.loc[dfsurvey['type'] == 'select_multiple'].iloc[0]
             # Extract the value of the 'name' column from the first matching row
             first_sm_name = first_select_multiple['name']
-            first_sm_list = first_select_multiple['list_name']
-
-            first_sm_opt = dfchoices.loc[dfchoices['list_name'] == first_sm_list].iloc[0]
-            first_sm_val = first_sm_opt['name']
-
+           
             st.markdown(' ')
             st.markdown('#### Handling *select_multiple* fileds')
-            st.markdown('Your questionnaire uses *select_multiple* fields. Please indicate if you want to produce code that splits these into a set of binary variables, or if you already selected the "seperate select_multiple" option in ODK/Kobo/SurveyCTO/... when downloading your data.')
+            st.markdown('Your questionnaire uses *select_multiple* fields (like: {first_sm_name}). Please indicate if you want to produce code that splits these into a set of binary variables, or if you already selected the "seperate select_multiple" option in ODK/Kobo/SurveyCTO/... when downloading your data.')
             col1, col2 = st.columns(2)
             with col1:
                 s_m_handle = st.radio(
                     "How do you want to handle these questions:",
                     key="visibility",
-                    options=["They are already split. Just label them for me", "Split and label them for me"],
+                    options=["They are already split. Just label them for me.", "Split and label them for me."],
                 )
             with col2:
-                if s_m_handle == "They are already split. Just label them for me":
+                if s_m_handle == "They are already split. Just label them for me.":
                     s_m_splitter = st.text_input("Please type the seperator symbol that you used below. This is the symbol that is put between the question name and the respective answer option in your dummies' names. Leave blank for no symbol:")
-                    st.markdown('Example dummy names:')
-                    st.write(first_sm_name,s_m_splitter,first_sm_val)
-
+                    
                 if s_m_handle == "Split and label them for me":
                     s_m_splitter = st.text_input("Please type the seperator symbol that you would like to use below. This is the symbol that is put between the question name and the respective answer option in your dummies' names. Leave blank for no symbol:")
             st.markdown('---')
