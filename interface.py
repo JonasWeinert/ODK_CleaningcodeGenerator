@@ -171,8 +171,7 @@ try:
                 else:
                     s_m_labelling_finished = True
             except KeyError:
-                st.error('11')
-
+                pass
 
         if s_m_handle == "Split and label them for me.":
             s_m_labelling_finished = False
@@ -198,7 +197,8 @@ try:
                 else:
                     s_m_labelling_finished = True
             except KeyError:
-                pass
+                st.error('11')
+
 
     # Print code
         if varnames_finished and s_o_labelling_finished and s_m_labelling_finished:
