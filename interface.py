@@ -46,7 +46,7 @@ with st.sidebar:
 
 ################# File Processing #################
 # Import Survey and Choices sheets into dataframes & ask user relevant field information
-if uploaded_file:
+if uploaded_file: 
     try:
         filename = uploaded_file.name # store filename
         st.markdown('---')
@@ -120,7 +120,8 @@ try:
             else:
                 varnames_finished = True
         except KeyError:
-            pass
+            #pass
+            st.error('11')
 
         ## Value labels for select_one
         s_o_labelling_finished = False
@@ -189,7 +190,7 @@ try:
                                 answ = choices_row[label_field]
                                 num = choices_row["name"]
                                 s_m_line += f'capture generate {name}{s_m_splitter}{num} = 0\n'
-                                s_m_line += f'replace {name}{s_m_splitter}{num} = 1 if strpos({name}, "{num} ")>0\n'
+                                s_m_line += f'capture replace {name}{s_m_splitter}{num} = 1 if strpos({name}, "{num} ")>0\n'
                                 s_m_line += f'capture label variable {name}{s_m_splitter}{num} "{num}_{answ}:{quest}"\n'
                                 s_m_line += f'capture label define {name}{s_m_splitter}{num} 0 "No" 1 "Yes", replace\n'
                                 s_m_line += f'capture label val {name}{s_m_splitter}{num} {name}{num}\n\n'
