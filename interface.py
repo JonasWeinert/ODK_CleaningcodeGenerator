@@ -34,7 +34,7 @@ with st.sidebar:
     st.markdown('##### To get specialised advice and assistance on your ODK and/or Stata projects, reach out via: ')
     st.markdown('[LinkedIn](https://www.linkedin.com/in/jweinert1997/)')
     st.markdown('[Github](https://github.com/JonasWeinert/)')
-    st.markdown('[Email](emailto:jnas.weinert@gmail.com)')
+    st.markdown('[Email](emailto:jonas.weinert@gmail.com)')
     st.markdown('---')
     st.header('This project')
     st.markdown('- [Request a feature](https://github.com/JonasWeinert/ODK_CleaningcodeGenerator/issues=)')
