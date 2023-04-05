@@ -54,6 +54,10 @@ if uploaded_file:
     # Preparing dataframes 
         # Read excel sheets into data frames
         dfchoices = pd.read_excel(uploaded_file, 'choices', engine = 'openpyxl')
+        for col in dfchoices.columns:
+            if 'list' in col:
+                # Rename the column to 'list_name'
+                dfchoices.rename(columns={col: 'list_name'}, inplace=True)
         dfsurvey = pd.read_excel(uploaded_file, 'survey', engine = 'openpyxl')
         # split type into two columns to get list_name
         dfsurvey[['type', 'list_name']] = dfsurvey['type'].str.split(' ', expand=True)
