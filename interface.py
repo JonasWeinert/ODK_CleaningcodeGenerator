@@ -195,8 +195,8 @@ try:
                                 answ = choices_row[label_field]
                                 num = choices_row["name"]
                                 s_m_line += f'capture generate {name}{s_m_splitter}{num} = 0\n'
+                                a = 1   
                                 for index, choices_row in dfchoices.iterrows():
-                                    a = 1   
                                     if choices_row["list_name"] == mpstr:
                                         s_m_line += f'capture replace {name}{s_m_splitter}{num} = 1 if {name}_{a} == 1\n'   
                                         a = a + 1
