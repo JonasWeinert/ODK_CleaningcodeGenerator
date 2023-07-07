@@ -195,9 +195,8 @@ try:
                             if choices_row["list_name"] == mpstr:
                                 answ = choices_row[label_field]
                                 num = choices_row["name"]
-                                #s_m_line += f'capture generate {name}{s_m_splitter}{num} = 0\n'
+                                s_m_line += f'capture generate {name}{s_m_splitter}{num} = 0\n'
                                 for index, choices_row in dfchoices.iterrows():
-                                s_m_line += f'capture generate {name}{s_m_splitter}{num} = 0\n'    
                                     if choices_row["list_name"] == mpstr:
                                         s_m_line += f'capture replace {name}{s_m_splitter}{num} = 1 if {name}{s_m_splitter}{num} == 1\n'      
                                 s_m_line += f'capture label variable {name}{s_m_splitter}{num} "{num}_{answ}:{quest}"\n'
