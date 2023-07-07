@@ -199,7 +199,7 @@ try:
                                     a = 1   
                                     if choices_row["list_name"] == mpstr:
                                         s_m_line += f'capture replace {name}{s_m_splitter}{num} = 1 if {name}_{a} == 1\n'   
-                                        a += 1   
+                                        a = a + 1
                                 s_m_line += f'capture label variable {name}{s_m_splitter}{num} "{num}_{answ}:{quest}"\n'
                                 s_m_line += f'capture label define {name}{s_m_splitter}{num} 0 "No" 1 "Yes", replace\n'
                                 s_m_line += f'capture label val {name}{s_m_splitter}{num} {name}{num}\n\n'
