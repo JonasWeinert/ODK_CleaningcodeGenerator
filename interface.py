@@ -190,7 +190,6 @@ try:
                         name = survey_row["name"]
                         x = 1
                         s_m_line += f'capture split {name}, destring\n'
-
                         for index, choices_row in dfchoices.iterrows():
                             if choices_row["list_name"] == mpstr:
                                 answ = choices_row[label_field]
