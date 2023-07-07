@@ -189,12 +189,17 @@ try:
                         quest = survey_row[label_field]
                         name = survey_row["name"]
                         x = 1
+                        s_m_line += f'capture split {name}, destring\n'
+
                         for index, choices_row in dfchoices.iterrows():
                             if choices_row["list_name"] == mpstr:
                                 answ = choices_row[label_field]
                                 num = choices_row["name"]
-                                s_m_line += f'capture generate {name}{s_m_splitter}{num} = 0\n'
-                                s_m_line += f'capture replace {name}{s_m_splitter}{num} = 1 if strpos({name}, "{num} ")>0\n'
+                                #s_m_line += f'capture generate {name}{s_m_splitter}{num} = 0\n'
+                                for index, choices_row in dfchoices.iterrows():
+                                s_m_line += f'capture generate {name}{s_m_splitter}{num} = 0\n'    
+                                    if choices_row["list_name"] == mpstr:
+                                        s_m_line += f'capture replace {name}{s_m_splitter}{num} = 1 if {name}{s_m_splitter}{num} == 1\n'      
                                 s_m_line += f'capture label variable {name}{s_m_splitter}{num} "{num}_{answ}:{quest}"\n'
                                 s_m_line += f'capture label define {name}{s_m_splitter}{num} 0 "No" 1 "Yes", replace\n'
                                 s_m_line += f'capture label val {name}{s_m_splitter}{num} {name}{num}\n\n'
